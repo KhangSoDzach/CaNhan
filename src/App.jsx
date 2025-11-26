@@ -404,7 +404,7 @@ export default function App() {
           <div className="flex flex-col md:flex-row items-center gap-12">
             <div className="md:w-1/2">
               <img 
-                src="Profile.jpg" 
+                src="/Profile.jpg" 
                 alt="Profile" 
                 className="rounded-2xl shadow-2xl w-full max-w-md mx-auto transform rotate-3 hover:rotate-0 transition-transform duration-500"
               />
