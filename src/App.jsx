@@ -65,7 +65,7 @@ const PROJECTS = [
     title: "TechShop E-commerce Platform",
     description: "An e-commerce platform for computer parts featuring secure checkout, real-time inventory, and admin management. Architected scalable MongoDB schema, containerized with Docker, and established CI/CD pipelines via GitHub Actions.",
     techStack: ["NodeJS", "ExpressJS", "MongoDB Atlas", "Redis", "Docker", "GitHub Actions"],
-    demoLink: "#",
+    demoLink: "https://final-nodejs-njfq.onrender.com",
     repoLink: "https://github.com/KhangSoDzach/Final_NodeJS",
     image: "https://placehold.co/600x400/1e3a5f/white?text=TechShop+Platform"
   },
@@ -330,8 +330,8 @@ const SectionTitle = ({ children, subtitle }) => (
 
 const ProjectCard = ({ project }) => (
   <div className={`bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col h-full group ${project.featured
-      ? 'border-2 border-indigo-500 ring-2 ring-indigo-100'
-      : 'border border-gray-100'
+    ? 'border-2 border-indigo-500 ring-2 ring-indigo-100'
+    : 'border border-gray-100'
     }`}>
     <div className="relative overflow-hidden h-48">
       <img
@@ -383,8 +383,8 @@ const ProjectCard = ({ project }) => (
       <div className="flex flex-wrap gap-2 mt-auto">
         {project.techStack.map((tech, index) => (
           <span key={index} className={`px-3 py-1 text-xs font-medium rounded-full ${project.featured
-              ? 'bg-indigo-50 text-indigo-600'
-              : 'bg-blue-50 text-blue-600'
+            ? 'bg-indigo-50 text-indigo-600'
+            : 'bg-blue-50 text-blue-600'
             }`}>
             {tech}
           </span>
