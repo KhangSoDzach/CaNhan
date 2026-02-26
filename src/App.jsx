@@ -43,6 +43,24 @@ const SKILLS = [
 
 const PROJECTS = [
   {
+    id: 0,
+    title: "NoiKheo AI",
+    subtitle: "Intelligent Communication Assistant",
+    role: "Lead Fullstack Developer & Architect",
+    description: "An AI-powered SaaS platform that refines communication styles by transforming casual messages into professional, empathetic, or polite responses. Built with a focus on high performance, programmatic SEO, and seamless multilingual support.",
+    keyFeatures: [
+      "Architected a Serverless backend using Cloudflare Workers to ensure <100ms latency and high scalability.",
+      "Implemented Programmatic SEO with automated sitemap generation and schema markup, driving organic growth.",
+      "Developed a custom prompt engineering engine using Gemini API to handle complex social contexts across 4+ languages (VI, EN, JP, KR).",
+      "Achieved 100% system reliability by implementing E2E testing with Playwright and Unit testing with Jest."
+    ],
+    techStack: ["React", "Cloudflare Workers", "Gemini API", "Tailwind CSS", "Playwright", "Jest", "Python (Scripts)"],
+    demoLink: "https://noikheo.com",
+    repoLink: "https://github.com/KhangSoDzach/noikheo-web",
+    image: "https://placehold.co/600x400/0f172a/6366f1?text=NoiKheo+AI",
+    featured: true
+  },
+  {
     id: 1,
     title: "TechShop E-commerce Platform",
     description: "An e-commerce platform for computer parts featuring secure checkout, real-time inventory, and admin management. Architected scalable MongoDB schema, containerized with Docker, and established CI/CD pipelines via GitHub Actions.",
@@ -152,16 +170,30 @@ const AIChatWidget = () => {
         - Database: MongoDB, MySQL, PostgreSQL, Redis
         - DevOps & Tools: Git, Docker, Postman, CI/CD (GitHub Actions)
 
-        Projects: ${JSON.stringify(PROJECTS)}
+        === FEATURED / FLAGSHIP PROJECT ===
+        NoiKheo AI (https://noikheo.com) — Intelligent Communication Assistant
+        Role: Lead Fullstack Developer & Architect
+        Description: An AI-powered SaaS platform that refines communication styles — turning casual messages into professional, empathetic, or polite responses.
+        Key Technical Highlights:
+          • Serverless Edge architecture: Cloudflare Workers delivering <100ms latency at global scale (Edge Computing).
+          • Programmatic SEO: Automated sitemap generation and schema markup for organic growth.
+          • Custom Prompt Engineering: Gemini API engine supporting 4+ languages (Vietnamese, English, Japanese, Korean).
+          • Quality Assurance: 100% system reliability via Playwright E2E tests + Jest unit tests.
+        Tech Stack: React, Cloudflare Workers, Gemini API, Tailwind CSS, Playwright, Jest, Python (Scripts)
+        Repo: https://github.com/KhangSoDzach/noikheo-web
+
+        Other Projects: ${JSON.stringify(PROJECTS.filter(p => !p.featured))}
         Contact: ${PERSONAL_INFO.email}
 
         Instructions:
         1. Answer questions as if you represent the candidate, referring to him in the third person (e.g., "Khang has experience in...").
         2. Be professional, concise, and enthusiastic about his Fullstack Developer profile.
-        3. Highlight his real-world internship at RikkeiSoft, his B2 English proficiency, and his MERN/Spring Boot skills.
-        4. If asked about .NET or Unity, clarify that his current focus is Fullstack (MERN + Spring Boot), not .NET/Unity.
-        5. If the answer isn't in the data, say "I don't have that specific information, but you can contact him directly at exal799@gmail.com."
-        6. Keep answers concise (under 3 sentences) unless asked for details.
+        3. When asked about featured, standout, best, or representative projects — ALWAYS lead with NoiKheo AI. Emphasize its Edge Computing architecture (Cloudflare Workers), multilingual AI capabilities, and production-grade testing setup.
+        4. When discussing NoiKheo AI, highlight that Khang chose Cloudflare Workers for its Edge Computing model, achieving sub-100ms global response times — a modern, serverless-first approach.
+        5. Highlight his real-world internship at RikkeiSoft, his B2 English proficiency, and his MERN/Spring Boot skills.
+        6. If asked about .NET or Unity, clarify that his current focus is Fullstack (MERN + Spring Boot + Serverless/Edge), not .NET/Unity.
+        7. If the answer isn't in the data, say "I don't have that specific information, but you can contact him directly at exal799@gmail.com."
+        8. Keep answers concise (under 3 sentences) unless asked for details.
       `;
 
       const response = await fetch(
@@ -297,13 +329,23 @@ const SectionTitle = ({ children, subtitle }) => (
 );
 
 const ProjectCard = ({ project }) => (
-  <div className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col h-full group">
+  <div className={`bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col h-full group ${project.featured
+      ? 'border-2 border-indigo-500 ring-2 ring-indigo-100'
+      : 'border border-gray-100'
+    }`}>
     <div className="relative overflow-hidden h-48">
       <img
         src={project.image}
         alt={project.title}
         className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
       />
+      {/* Featured badge */}
+      {project.featured && (
+        <div className="absolute top-3 left-3 flex items-center gap-1.5 bg-indigo-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
+          <Sparkles size={12} />
+          Featured Project
+        </div>
+      )}
       <div className="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center space-x-4">
         <a href={project.demoLink} target="_blank" rel="noopener noreferrer" className="p-2 bg-white rounded-full hover:bg-blue-600 hover:text-white transition-colors" title="View Demo">
           <ExternalLink size={20} />
@@ -314,11 +356,36 @@ const ProjectCard = ({ project }) => (
       </div>
     </div>
     <div className="p-6 flex-1 flex flex-col">
-      <h3 className="text-xl font-bold text-gray-900 mb-2">{project.title}</h3>
-      <p className="text-gray-600 mb-4 flex-1 text-sm leading-relaxed">{project.description}</p>
+      <div className="mb-2">
+        <h3 className="text-xl font-bold text-gray-900">{project.title}</h3>
+        {project.subtitle && (
+          <p className="text-sm text-indigo-500 font-medium">{project.subtitle}</p>
+        )}
+        {project.role && (
+          <p className="text-xs text-gray-400 font-medium mt-0.5">🧑‍💻 {project.role}</p>
+        )}
+      </div>
+
+      <p className="text-gray-600 mb-3 text-sm leading-relaxed">{project.description}</p>
+
+      {/* Key Features as bullet points */}
+      {project.keyFeatures && project.keyFeatures.length > 0 && (
+        <ul className="mb-4 space-y-1.5">
+          {project.keyFeatures.map((feature, i) => (
+            <li key={i} className="flex items-start gap-2 text-xs text-gray-600 leading-relaxed">
+              <span className="text-indigo-500 mt-0.5 flex-shrink-0">▸</span>
+              <span>{feature}</span>
+            </li>
+          ))}
+        </ul>
+      )}
+
       <div className="flex flex-wrap gap-2 mt-auto">
         {project.techStack.map((tech, index) => (
-          <span key={index} className="px-3 py-1 bg-blue-50 text-blue-600 text-xs font-medium rounded-full">
+          <span key={index} className={`px-3 py-1 text-xs font-medium rounded-full ${project.featured
+              ? 'bg-indigo-50 text-indigo-600'
+              : 'bg-blue-50 text-blue-600'
+            }`}>
             {tech}
           </span>
         ))}
